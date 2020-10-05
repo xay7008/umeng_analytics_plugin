@@ -20,7 +20,7 @@
     } else if ([@"event" isEqualToString:call.method]) {
         [self event:call result:result];
     } else if ([@"trackEvent" isEqualToString:call.method]) {
-        [self event:call result:result];
+        [self trackEvent:call result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
