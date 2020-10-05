@@ -7,6 +7,7 @@ import com.umeng.commonsdk.UMConfigure;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
+import java.util.HashMap;
 
 public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
     private final MethodChannel channel;
@@ -31,6 +32,9 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
                 break;
             case "event":
                 event(call, result);
+                break;
+            case "trackEvent":
+                trackEvent(call, result);
                 break;
             default:
                 result.notImplemented();
@@ -95,6 +99,14 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
         final String eventId = call.argument("eventId");
         final String label = call.argument("label");
 
+        MobclickAgent.onEvent(context, eventId, label);
+
+        result.success(true);
+    }
+
+    private void trackEvent(MethodCall call, MethodChannel.Result result) {
+        final String eventId = call.argument("eventId");
+        final HashMap<String,String> label = call.argument("map");
         MobclickAgent.onEvent(context, eventId, label);
 
         result.success(true);

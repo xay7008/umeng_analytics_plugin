@@ -72,4 +72,14 @@ class UmengAnalyticsPlugin {
 
     return _channel.invokeMethod<bool>('event', map);
   }
+
+  void trackEventKV(String eventName, {Map<String, String> map}) async {
+      if (map == null) map = Map();
+      await _channel.invokeMethod<void>('trackEvent', <String, dynamic>{
+        'eventId': eventName,
+        'map': map,
+      });
+      _channel.invokeMethod("trackEvent", map);
+  }
+
 }
